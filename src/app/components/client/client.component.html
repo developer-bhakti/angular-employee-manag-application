@@ -1,7 +1,16 @@
+<p>{{clientObj | json}}</p>
+<ul>
+  @for (item of userList$ |async; track $index) {
+    <li>{{item.username}}</li>
+  }
+</ul>
+<app-alert [alertType]="'Success!'" [message]="'Hi From Client Page'"></app-alert>
 <div class="row">
   <div class="col-8">
     <div class="card">
-      <div class="card-header bg-success">Client List</div>
+      <div class="card-header bg-success">
+        Client List -{{currentDate | date: 'dd-mm-yyyy'}}
+      </div>
       <div class="card-body">
         <div class="row">
           <div class="col-12">
@@ -20,7 +29,7 @@
                 @for (item of clientList; track $index) {
                 <tr>
                   <td>{{ $index + 1 }}</td>
-                  <td>{{ item.companyName }}</td>
+                  <td>{{ item.companyName | uppercase }}</td>
                   <td>{{ item.contactPersonName }}</td>
                   <td>{{ item.contactNo }}</td>
                   <td>{{ item.city }}</td>
@@ -166,11 +175,12 @@
             <div class="col-6 text-center">
               <button class="btn btn-secondary">Reset</button>
             </div>
-
             <div class="col-6 text-center">
-              <button class="btn btn-success" [disabled]="!form.valid" (click)="onSaveClient()">
-                {{ clientObj.clientId != 0 ? "Update Client" : " Save Client" }}
-              </button>
+              <app-my-button (onBtnClicked)="onSaveClient($event)" [btnClass]="'btn btn-success'" [btnText]="clientObj.clientId != 0 ? 'Update Client' : 'Save Client'"></app-my-button>
+
+              <!-- <button class="btn btn-success" [disabled]="!form.valid" (click)="onSaveClient()">
+                {{  }}
+              </button> -->
             </div>
           </div>
         </form>

@@ -1,3 +1,4 @@
+
 export interface IRole {
   roleId: number,
   role: string
@@ -14,6 +15,18 @@ export interface APIResponseModel {
    data: any
 }
 
+export interface ClientProject {
+  empName:         string,
+  empId:           number,
+  empCode:         string,
+  empEmailId:      string,
+  empDesignation:  string,
+  projectName:     string,
+  startDate:       Date,
+  expectedEndDate: Date,
+  clientName:      string,
+  clientProjectId: number
+}
 
 export interface Employee {
   empName: string,

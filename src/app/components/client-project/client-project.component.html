@@ -1,7 +1,13 @@
+<app-alert [alertType]="'Error!'" [message]="'Welcome To Project Page'"></app-alert>
+
 <div class="row">
   <div class="col-8">
     <div class="card">
-      <div class="card-header bg-success">Client List</div>
+      <div class="card-header bg-success">
+        Client List - {{firstName()}}
+        <button class="btn btn-danger" (click)="changeFName()">Change F Name</button>
+
+      </div>
       <div class="card-body">
         <div class="row">
           <div class="col-12">
@@ -17,26 +23,19 @@
                 </tr>
               </thead>
                <tbody>
-                <!-- @for (item of clientList; track $index) { -->
-                <!-- <tr>
+                @for (item of projectList(); track $index) { 
+                 <tr>
                   <td>{{ $index + 1 }}</td>
-                  <td>{{ item.companyName }}</td>
-                  <td>{{ item.contactPersonName }}</td>
-                  <td>{{ item.contactNo }}</td>
-                  <td>{{ item.city }}</td>
+                  <td>{{ item.clientName }}</td>
+                  <td>{{ item.projectName }}</td>
+                  <td>{{ item.empName }}</td>
+                  <td>{{ item.startDate | date:'dd-mm-yyyy'}}</td>
                   <td>
-                    <button class="btn btn-primary" (click)="onEdit(item)">
-                      Edit
-                    </button>
-                    <button
-                      class="btn btn-danger"
-                      (click)="onDelete(item.clientId)"
-                    >
-                      Delete
-                    </button>
+                    <button class="btn btn-primary">Edit</button>
+                    <button class="btn btn-danger"> Delete</button>
                   </td>
                 </tr>
-                } -->
+                }
               </tbody>
             </table>
           </div>
@@ -48,6 +47,7 @@
     <div class="card">
       <div class="card-header bg-success">New Client</div>
       <div class="card-body">
+
         <form [formGroup]="projectForm">
           <div class="row">
             <div class="col-6">
@@ -57,12 +57,22 @@
                 formControlName="projectName"
                  formControlName="projectName" class="form-control"
               />
+              @if (projectForm.controls['projectName'].touched) {
+                <div class="text-danger">
+                  @if (projectForm.controls ['projectName'].errors?.['required']) {
+                    <span>This is Required</span>
+                  }
+                  @if (projectForm.controls ['projectName'].errors?.['minlength']) {
+                    <span>min 4 char Required</span>
+                  }
+                </div>
+              }
             </div>
 
             <div class="col-6">
               <label for="">Start Date</label>
               <input
-              type="text"
+              type="date"
                formControlName="startDate" class="form-control"
             />
           </div>
@@ -70,7 +80,7 @@
             <div class="col-6">
               <label for="">Expected End Date</label>
               <input
-                type="text"
+                type="date"
                  formControlName=" expectedEndDate" class="form-control"
               />
             </div>
@@ -153,11 +163,11 @@
             </div>
 
             <div class="col-6 text-center">
-              <button class="btn btn-success">Save Project
+              <button class="btn btn-success" [disabled]="projectForm.invalid" (click)="onSaveProject()">Save Project
               </button>
             </div>
           </div>
-        <!-- </form> -->
+          </div>
+        </form>
       </div>
-  <!-- </div> -->
 
